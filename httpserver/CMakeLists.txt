@@ -1,6 +1,7 @@
 set(SRCS 
 # all the .cc source code
-
+    # hello.cc
+    myserver.cc
 )
 
 

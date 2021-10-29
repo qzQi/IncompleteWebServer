@@ -67,12 +67,12 @@ void* startThread(void* obj) {
   return NULL;
 }
 
-Thread::Thread(const ThreadFunc& func, const string& n)
+Thread::Thread(ThreadFunc func, const string& n)
     : started_(false),
       joined_(false),
       pthreadId_(0),
       tid_(0),
-      func_(func),
+      func_(std::move(func)),
       name_(n),
       latch_(1) {
   setDefaultName();

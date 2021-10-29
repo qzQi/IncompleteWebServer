@@ -2,6 +2,7 @@ set(LIB_SRC
     # all.cc file编译为库文件
     CountDownLatch.cc
     Thread.cc
+    ThreadPool.cc
 )
 
 add_library(libserver_base ${LIB_SRC})

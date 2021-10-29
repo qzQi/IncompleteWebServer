@@ -30,7 +30,7 @@ using std::string;
 class Thread : noncopyable {
  public:
   typedef std::function<void()> ThreadFunc;
-  explicit Thread(const ThreadFunc&, const std::string& name = std::string());
+  explicit Thread(ThreadFunc, const std::string& name = std::string());
   ~Thread();
   void start();
   int join();

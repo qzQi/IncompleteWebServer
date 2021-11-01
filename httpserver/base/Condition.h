@@ -29,6 +29,16 @@ public:
     {
         pthread_cond_wait(&cond,mutex.GetMutex());
     }
+
+// 超时的话返回true，否则返回false
+    bool waitForSeconds(int seconds)
+    {
+        struct timespec abstime;
+        clock_gettime(CLOCK_REALTIME, &abstime);
+        abstime.tv_sec += static_cast<time_t>(seconds);
+        return ETIMEDOUT == pthread_cond_timedwait(&cond, mutex.GetMutex(), &abstime);
+    }
+
     void notify()
     {
         pthread_cond_signal(&cond);

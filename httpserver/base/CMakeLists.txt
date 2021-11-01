@@ -3,6 +3,12 @@ set(LIB_SRC
     CountDownLatch.cc
     Thread.cc
     ThreadPool.cc
+    FileUtil.cc
+    LogFile.cc
+    Logging.cc
+    LogStream.cc
+    AsyncLogging.cc
+
 )
 
 add_library(libserver_base ${LIB_SRC})

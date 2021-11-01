@@ -12,7 +12,7 @@
 #include <string>
 #include "noncopyable.h"
 
-class AsyncLogging;
+
 const int kSmallBuffer = 4000;
 const int kLargeBuffer = 4000 * 1000;
 
@@ -47,6 +47,9 @@ class FixedBuffer : noncopyable {
   char data_[SIZE];
   char* cur_;
 };
+
+
+
 
 class LogStream : noncopyable {
  public:

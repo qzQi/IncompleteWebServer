@@ -3,3 +3,6 @@ target_link_libraries(thread_test libserver_base)
 
 add_executable(threadpool_test ThreadPool_test.cc)
 target_link_libraries(threadpool_test libserver_base)
+
+add_executable(logging_test logging_test.cc)
+target_link_libraries(logging_test libserver_base)

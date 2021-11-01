@@ -1,15 +1,17 @@
-#include "FileUtil.h"
+#include "./noncopyable.h"
+#include "./FileUtil.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <unistd.h>
 #include <assert.h>
-
+ 
 using namespace std;
 
-AppendFile::AppendFile(string filename) : fp_(fopen(filename.c_str(), "ae")) {
+AppendFile::AppendFile(string filename) {
   // 改变默认的stdio缓冲
+  fp_=fopen(filename.c_str(), "ae");
   setbuffer(fp_, buffer_, sizeof buffer_);
 }
 
@@ -32,5 +34,7 @@ void AppendFile::append(const char* logline, const size_t len) {
 
 void AppendFile::flush() { fflush(fp_); }
 
-size_t AppendFile::write(const char* logline, size_t len) {
-  retur
+size_t AppendFile::write(const char* logline, size_t len)
+{
+  return fwrite_unlocked(logline,1,len,fp_);
+}

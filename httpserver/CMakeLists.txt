@@ -17,7 +17,7 @@ include_directories(${PROJECT_SOURCE_DIR}/base)
 add_library(libserver_http ${LIB_SRC})
 target_link_libraries(libserver_http libserver_base pthread rt)
 
-add_executable(MyServer myserver.cc)
+add_executable(MyServer MyServer.cc)
 target_link_libraries(MyServer libserver_http)
 
 add_subdirectory(base)

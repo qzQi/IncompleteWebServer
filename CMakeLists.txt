@@ -8,7 +8,7 @@ endif()
 
 set(CXX_FLAGS
     -g
-    -Wall
+    # -Wall
     -std=c++17
     -D_PTHREADS
     -Wno-unused-parameter

@@ -1,6 +1,5 @@
-set(SRCS 
-# all the .cc source code
-    # hello.cc
+set(LIB_SRC
+
     Channel.cc
     Epoll.cc
     EventLoop.cc
@@ -10,13 +9,15 @@ set(SRCS
     Server.cc
     Timer.cc
     Util.cc
-    myserver.cc
 )
 
 
 include_directories(${PROJECT_SOURCE_DIR}/base)
 
-add_executable(myserver ${SRCS})
-target_link_libraries(myserver libserver_base)
+add_library(libserver_http ${LIB_SRC})
+target_link_libraries(libserver_http libserver_base pthread rt)
+
+add_executable(MyServer myserver.cc)
+target_link_libraries(MyServer libserver_http)
 
 add_subdirectory(base)

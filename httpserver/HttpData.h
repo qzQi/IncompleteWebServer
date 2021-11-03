@@ -120,4 +120,4 @@ class HttpData : public std::enable_shared_from_this<HttpData> {
   AnalysisState analysisRequest();
 };
 
-#define HTTPDATA_H
+#endif

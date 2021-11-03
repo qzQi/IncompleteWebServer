@@ -9,7 +9,7 @@
 #include <deque>
 #include <memory>
 #include <queue>
-// #include "HttpData.h"
+#include "HttpData.h"
 #include "base/Mutex.h"
 #include "base/noncopyable.h"
 

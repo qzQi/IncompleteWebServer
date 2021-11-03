@@ -17,7 +17,7 @@ emmm，目前没有实现回滚功能，这个可有可无，待添加......
 #include "FileUtil.h"
 #include "Mutex.h"
 #include "noncopyable.h"
-
+// 待完成：添加一个日志回滚的功能。
 
 class LogFile : noncopyable {
  public:

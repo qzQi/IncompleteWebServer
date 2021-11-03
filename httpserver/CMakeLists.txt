@@ -1,6 +1,15 @@
 set(SRCS 
 # all the .cc source code
     # hello.cc
+    Channel.cc
+    Epoll.cc
+    EventLoop.cc
+    EventLoopThread.cc
+    EventLoopThreadPool.cc
+    HttpData.cc
+    Server.cc
+    Timer.cc
+    Util.cc
     myserver.cc
 )
 

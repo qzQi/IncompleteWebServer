@@ -16,7 +16,7 @@ std::unordered_map<std::string, std::string> MimeType::mime;
 const __uint32_t DEFAULT_EVENT = EPOLLIN | EPOLLET | EPOLLONESHOT;
 const int DEFAULT_EXPIRED_TIME = 2000;              // ms
 const int DEFAULT_KEEP_ALIVE_TIME = 5 * 60 * 1000;  // ms
-
+// C++图标 
 char favicon[555] = {
     '\x89', 'P',    'N',    'G',    '\xD',  '\xA',  '\x1A', '\xA',  '\x0',
     '\x0',  '\x0',  '\xD',  'I',    'H',    'D',    'R',    '\x0',  '\x0',
@@ -185,7 +185,7 @@ void HttpData::handleRead() {
       }
       // cout << "readnum == 0" << endl;
     }
-
+// 解析request-line
     if (state_ == STATE_PARSE_URI) {
       URIState flag = this->parseURI();
       if (flag == PARSE_URI_AGAIN)
@@ -200,6 +200,7 @@ void HttpData::handleRead() {
       } else
         state_ = STATE_PARSE_HEADERS;
     }
+    // 解析首部
     if (state_ == STATE_PARSE_HEADERS) {
       HeaderState flag = this->parseHeaders();
       if (flag == PARSE_HEADER_AGAIN)
@@ -246,21 +247,14 @@ void HttpData::handleRead() {
   if (!error_) {
     if (outBuffer_.size() > 0) {
       handleWrite();
-      // events_ |= EPOLLOUT;
+
     }
-    // error_ may change
+
     if (!error_ && state_ == STATE_FINISH) {
       this->reset();
       if (inBuffer_.size() > 0) {
         if (connectionState_ != H_DISCONNECTING) handleRead();
       }
-
-      // if ((keepAlive_ || inBuffer_.size() > 0) && connectionState_ ==
-      // H_CONNECTED)
-      // {
-      //     this->reset();
-      //     events_ |= EPOLLIN;
-      // }
     } else if (!error_ && connectionState_ != H_DISCONNECTED)
       events_ |= EPOLLIN;
   }
@@ -351,27 +345,40 @@ URIState HttpData::parseURI() {
   // filename
   pos = request_line.find("/", pos);
   if (pos < 0) {
+    // 对于默认情况的处理，requests_line里面的请求目标为空
     fileName_ = "index.html";
     HTTPVersion_ = HTTP_11;
     return PARSE_URI_SUCCESS;
-  } else {
+  } 
+  else {
+    // 存在指定的目标文件的情况
     size_t _pos = request_line.find(' ', pos);
     if (_pos < 0)
+    // 不合法的URL请求目标（无空格）
       return PARSE_URI_ERROR;
     else {
       if (_pos - pos > 1) {
+        // 获取请求文件名字
         fileName_ = request_line.substr(pos + 1, _pos - pos - 1);
+        // 除了默认的请求外都要加上?结尾才可以请求到,不然全部是默认的
         size_t __pos = fileName_.find('?');
         if (__pos >= 0) {
           fileName_ = fileName_.substr(0, __pos);
         }
+        else
+        {
+          fileName_="index.html"
+        }
+        
       }
 
       else
         fileName_ = "index.html";
     }
+    // 更新pos指向request target之后
     pos = _pos;
   }
+  // target解析完成 解析http版本， HTTP/1.0\r\n  HTTP/1.1\r\n
   // cout << "fileName_: " << fileName_ << endl;
   // HTTP 版本号
   pos = request_line.find("/", pos);

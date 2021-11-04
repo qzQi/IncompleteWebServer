@@ -5,7 +5,10 @@
 enable shared from this来管理tcpconnection          
 
 我们的代码里面没有使用线程池，使得这个支持线程池也很简单，我们直接在线程池里面处理这
-handleRead()   但是显然我们这个的计算量非常小，真的没必要
+handleRead()   但是显然我们这个的计算量非常小，真的没必要         
+
+同时每个http的请求数据我们也在这里保存比如  请求的文件 
+基于对象的设计，每个http-data有一个channel，通过设置callback来获得变化
 */
 
 #include <sys/epoll.h>
@@ -102,6 +105,7 @@ class HttpData : public std::enable_shared_from_this<HttpData> {
 
   HttpMethod method_;
   HttpVersion HTTPVersion_;
+  // 记录每个http的请求
   std::string fileName_;
   std::string path_;
   int nowReadPos_;
@@ -110,7 +114,7 @@ class HttpData : public std::enable_shared_from_this<HttpData> {
   bool keepAlive_;
   std::map<std::string, std::string> headers_;
   std::weak_ptr<TimerNode> timer_;
-
+// 和muduo相比，这里做一下特化，只处理我们的http-请求（read）与应答（write）
   void handleRead();
   void handleWrite();
   void handleConn();
